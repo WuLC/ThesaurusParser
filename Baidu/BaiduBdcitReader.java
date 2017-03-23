@@ -10,8 +10,7 @@ import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.util.*;
 
-
-public class BaiduBdcitReader 
+public class BaiduBdcitReader
 {   
 	/**
 	 *  读取百度词库文件(bdict)，返回一个包含所以词的list

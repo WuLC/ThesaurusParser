@@ -3,6 +3,7 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.EOFException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
@@ -120,11 +121,20 @@ public class SougouScelReader {
                     if (count > bytes.length) {
                         bytes = new byte[count];
                     }
-                    input.readFully(bytes, 0, count);
-                    String word = new String(bytes, 0, count, encoding);
-                    //接下来12个字节可能是词频或者类似信息  
-                    input.skip(12);
-                    list.add(word);
+
+                    try
+                    {
+                        input.readFully(bytes, 0, count);
+                        String word = new String(bytes, 0, count, encoding);
+                        //System.out.println(String.valueOf(i)+','+String.valueOf(size)+','+word);
+                        //接下来12个字节可能是词频或者类似信息  
+                        input.skip(12);
+                        list.add(word);
+                    }
+                    catch (EOFException e)
+                    {
+                        break;
+                    }
                 }
             }
             //System.out.println(wordMap.size());

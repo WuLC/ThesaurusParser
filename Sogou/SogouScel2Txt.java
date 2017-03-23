@@ -32,6 +32,7 @@ public class SogouScel2Txt
 	 * @param outputPath 输出路径
 	 * @param isAppend  是否拼接追加词库内容,true 代表追加,false代表重建
 	 * **/
+  
    public static void sogou(String inputPath,String outputPath,boolean isAppend) throws IOException
    {  
        File file=new File(inputPath);  

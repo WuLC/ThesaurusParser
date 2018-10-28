@@ -109,7 +109,7 @@ public class SougouScelReader {
                     int key = readUnsignedShort(input);
                     buffer.append(pyMap.get(key)).append("'");
                 }
-                buffer.setLength(buffer.length() - 1);
+                buffer.setLength(Math.max(buffer.length() - 1, 0));
                 String py = buffer.toString();
                 List<String> list = wordMap.get(py);
                 if (list == null) {

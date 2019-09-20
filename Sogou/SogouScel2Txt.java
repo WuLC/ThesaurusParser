@@ -20,11 +20,47 @@ import java.util.Map.Entry;
  */
 public class SogouScel2Txt 
 {
-	
-	public static void main(String[] args)throws Exception 
-	{		
-   	 sogou("G:/各大输入法词库/搜狗/sogou/城市信息大全/安徽/安徽.scel","G:/各大输入法词库/搜狗/sogou/城市信息大全/安徽/安徽.txt",false);
-	}
+
+    public static final String sourcePath = "E:/Java开源项目/ThesaurusParser-master/123";
+    public static final String purposePath = "E:/新建文件夹";
+
+    public static void main(String[] args) throws Exception {
+        copyDir(sourcePath, purposePath);
+    }
+
+    /**
+     * 将srcDir下面的所有(后缀为scel)的文件转换为txt文件，并复制到desDir
+     * @param srcDir
+     * 			原路径
+     * @param desDir
+     * 			目的路径
+     * @throws IOException
+     */
+    public static void copyDir(String srcDir,String desDir) throws IOException
+    {
+        File srcfile=new File(srcDir);
+        File desfile=new File(desDir);
+        if(!desfile.exists())//如果目标目录不存在
+        {
+            desfile.mkdirs();
+        }
+
+        File[] files=srcfile.listFiles();
+        for(int i = 0; i < files.length; i++)
+        {
+            if(files[i].isFile()) {
+                String fileName = files[i].getName();
+                String substring = fileName.substring(0, fileName.lastIndexOf("."));
+                String suffix = fileName.substring(fileName.lastIndexOf("."), fileName.length());
+//				System.out.println("后缀是"+suffix);
+                if(".scel".equals(suffix)){
+                    sogou(files[i].getAbsolutePath(), desDir+"/"+substring+".txt",false);
+                }
+            }
+            else //如果是一个目录
+                copyDir(files[i].getAbsolutePath(),desDir+"/"+files[i].getName());
+        }
+    }
    
 	/**
 	 * 读取scel的词库文件,生成txt格式的文件
